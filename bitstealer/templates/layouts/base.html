@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/gui.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/popup.css' %}">
+
+    {% if title %}
+        <title>Bit Stealer - {{ title }}</title>
+    {% else %}
+        <title>Bit Stealer</title>
+    {% endif %}
+</head>
+<body>
+<header>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="{% url 'home' %}">
+                Bit Stealer
+            </a>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item"  href="{% url 'home' %}">
+                    Home
+                </a>
+
+                <a class="navbar-item" href="{% url 'getTradePage' %}">
+                    Trade List
+                </a>
+                <a class="navbar-item" href="{% url 'orders' %}">
+                    Orders
+                </a>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        {%  if user.is_authenticated %}
+                            <a class="button is-primary" href="{% url 'profile' %}">
+                                <strong>Profile</strong>
+                            </a>
+                            <a class="button is-light"  href="{% url 'logout' %}">
+                                Log Out
+                            </a>
+                        {%  else %}
+                            <a class="button is-primary" href="{% url 'register' %}">
+                                <strong>Sign up</strong>
+                            </a>
+                            <a class="button is-light"  href="{% url 'login' %}">
+                                Log in
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<section class="section">
+    <div class="container">
+        {% if messages%}
+            {% for message in messages%}
+                <div class="notification is-{{message.tags}}">
+                    <button class="delete"></button>
+                    {{message}}
+                </div>
+            {% endfor messages %}
+        {% endif%}
+        {% block content %} {% endblock content %}
+    </div>
+</section>
+<script src="{% static 'js/fontawesome.js' %}"></script>
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/highstock.js' %}"></script>
+<script src="{% static 'js/indicators-all.js' %}"></script>
+<script src="{% static 'js/drag-panes.js' %}"></script>
+<script src="{% static 'js/annotations-advanced.js' %}"></script>
+<script src="{% static 'js/price-indicator.js' %}"></script>
+<script src="{% static 'js/full-screen.js' %}"></script>
+<script src="{% static 'js/stock-tools.js' %}"></script>
+<script src="{% static 'js/axios.min.js' %}"></script>
+<script src="{% static 'js/vue.js' %}"></script>
+{% block scripts %} {% endblock scripts %}
+</body>
+</html>

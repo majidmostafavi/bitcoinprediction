@@ -1,0 +1,32 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+
+    <h1 class="title">{{ user.first_name }} {{ user.last_name }}</h1>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="columns">
+
+                <div class="field column">
+                    <label class="label">Api Key:</label>
+                    <div class="control">
+                        <input class="input" name="api_key" placeholder="Api Key" type="text"
+                                {% if user.account.api_key %}
+                               value="{{ user.account.api_key }}" disabled
+                                {% endif %}>
+                    </div>
+                </div>
+                <div class="field column">
+                    <label class="label">Api Secret:</label>
+                    <div class="control">
+                        <input class="input" name="api_secret" placeholder="Api Secret" type="text"
+                                {% if user.account.api_secret %}
+                               value="{{ user.account.api_secret }}" disabled
+                                {% endif %}>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+{% endblock content %}

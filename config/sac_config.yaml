@@ -1,0 +1,108 @@
+default:
+    reward_signals:
+        extrinsic:
+        strength: 1.0
+        gamma: 0.99
+
+bitmex:
+    trainer: sac
+    normalize: false
+    batch_size: 16
+    num_layers: 2
+    hidden_units: 256
+    learning_rate: 1.0e-3
+    learning_rate_schedule: constant
+    init_entcoef: 0.1
+    buffer_init_steps: 1000
+    buffer_size: 50000
+    max_steps: 50000
+    tau: 0.005
+    num_update: 1
+    summary_freq: 1000
+    time_horizon: 200
+    train_interval: 1
+
+    beta: 0.01
+    epsilon: 0.00001
+    lambd: 0.99
+    num_epoch: 4
+
+    use_recurrent: true
+    sequence_length: 128
+    memory_size: 256
+
+    vis_encode_type: simple
+    reward_signals:
+        extrinsic:
+            strength: 1.0
+            gamma: 0.99
+
+
+
+
+CartPole-v0:
+    trainer: sac
+    normalize: false
+    batch_size: 64
+    num_layers: 2
+    hidden_units: 64
+    learning_rate: 3.0e-4
+    learning_rate_schedule: constant
+    init_entcoef: 0.1
+    buffer_init_steps: 1000
+    buffer_size: 50000
+    max_steps: 50000
+    tau: 0.005
+    num_update: 1
+    summary_freq: 1000
+    time_horizon: 32
+    train_interval: 1
+
+    beta: 0.01
+    epsilon: 0.00001
+    lambd: 0
+    num_epoch: 4
+
+    use_recurrent: false
+    sequence_length: 64
+    memory_size: 256
+
+    vis_encode_type: simple
+    reward_signals:
+        extrinsic:
+            strength: 1.0
+            gamma: 0.99
+
+Acrobot-v1:
+    trainer: ppo
+    normalize: false
+    batch_size: 16
+    num_layers: 2
+    hidden_units: 64
+    learning_rate: 3.0e-3
+    learning_rate_schedule: constant
+    init_entcoef: 0.1
+    buffer_init_steps: 1000
+    buffer_size: 20000
+    max_steps: 50000
+    tau: 0.005
+    num_update: 1
+    summary_freq: 1000
+    time_horizon: 200
+    train_interval: 1
+
+    beta: 0.01
+    epsilon: 0.00001
+    lambd: 0
+    num_epoch: 4
+
+    use_recurrent: false
+    sequence_length: 64
+    memory_size: 256
+
+    vis_encode_type: simple
+    reward_signals:
+        extrinsic:
+            strength: 1.0
+            gamma: 0.99
+

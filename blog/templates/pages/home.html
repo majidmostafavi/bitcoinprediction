@@ -1,0 +1,16 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+    {% for post in posts %}
+        <article class="media">
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                        <strong>{{ post.title }}</strong> <small>{{ post.author }}</small> <small>{{ post.date_posted }}</small>
+                        <br>
+                        {{ post.content }}
+                    </p>
+                </div>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

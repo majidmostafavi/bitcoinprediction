@@ -1,0 +1,106 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+    {%  if user.is_authenticated %}
+    <div id="app">
+        <div class="columns">
+            <div class="column">
+                <button class="button is-success is-fullwidth" @click="addCoin">Add</button>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <span class="label">Base</span>
+            </div>
+            <div class="column">
+                <span class="label">Quote</span>
+            </div>
+            <div class="column">
+                <span class="label">Qty</span>
+            </div>
+            <div class="column">
+                <span class="label">Time</span>
+            </div>
+            <div class="column">
+                <span class="label">Actions</span>
+            </div>
+        </div>
+        <div class="columns" v-for="(coin,index) in coins" :key="index">
+            <div class="column">
+                <div class="field">
+                    <div class="control"><input class="input" type="text" v-model="coin.base"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <div class="control"><input class="input" type="text" v-model="coin.quote"></div>
+                </div>
+            </div> <div class="column">
+                <div class="field">
+                    <div class="control"><input class="input" type="tel" v-model="coin.qty"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <div class="control"><input class="input" type="tel" v-model="coin.time"></div>
+                </div>
+            </div>
+            <div class="column">
+                <button class="button is-primary" :class="{'is-loading':coin.status}" type="button" @click="start(index)">Start</button>
+                <button class="button" type="button" @click="stop">Stop</button>
+            </div>
+        </div>
+    </div>
+    {%  endif %}
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                time: 1,
+                timer: null,
+                coins: [
+                    {
+                        base:"NEO",
+                        quote:"BTC",
+                        qty:"3",
+                        time:1,
+                        timer:null,
+                        status:0
+                    }
+                ]
+            },
+            methods: {
+                start: function (index) {
+                    coin = this.coins[index];
+
+                        coin.status=1;
+                        this.timer = setInterval(() => {
+                            this.trade(coin.base, coin.quote, coin.qty);
+                        }, this.time * 1000);
+
+                },
+                stop: function () {
+                    coin.status=0;
+                    clearTimeout(this.timer);
+                },
+                trade: function (base,quote,qty) {
+                    axios.get("{% url 'trader' %}", {params: {base,quote,qty}}).then(({data}) => {
+                        console.log(data);
+                    })
+                },
+                addCoin: function () {
+                    this.coins.push({
+                        base:"",
+                        quote:"BTC",
+                        qty:1,
+                        time:1,
+                        timer:null
+                    });
+                }
+            },
+        });
+
+    </script>
+{% endblock scripts %}

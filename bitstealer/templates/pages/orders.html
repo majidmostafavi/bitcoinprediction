@@ -1,0 +1,63 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+
+    <h1 class="title">Orders</h1>
+        <div class="columns">
+            <div class="column">
+                <table class="table is-fullwidth">
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Status</th>
+                        <th>Side</th>
+                        <th>QTY</th>
+                        <th>Price</th>
+                        <th>Low</th>
+                        <th>High</th>
+                        <th>Time</th>
+                    </tr>
+                    {% for order in user.orders.all %}
+                        <tr>
+                            <td>{{ order.symbol }}</td>
+                            <td>{{ order.status }}</td>
+                            <td>{{ order.side }}</td>
+                            <td>{{ order.qty }}</td>
+                            <td>{{ order.price }}</td>
+                            <td>{{ order.low }}</td>
+                            <td>{{ order.high }}</td>
+                            <td>{{ order.time }}</td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                time: 1,
+                timer: null
+            },
+            methods: {
+                start: function () {
+                    this.timer = setInterval(() => {
+                        this.trade();
+                    }, this.time * 1000);
+                },
+                stop: function () {
+                    clearTimeout(this.timer);
+                },
+                trade: function () {
+                    axios.get("{% url 'trader' %}", {params: {coin: 'neo'}}).then(({data}) => {
+                        console.log(data);
+                    })
+                }
+            },
+        });
+
+    </script>
+{% endblock scripts %}
