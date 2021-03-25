@@ -68,5 +68,5 @@ ccxt==1.18.1220
 stochastic==0.4.0
 ta==0.4.7
 mpi4py
-pyyaml==5.1.2
+pyyaml==5.4
 tensorforce
